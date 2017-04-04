@@ -1,5 +1,5 @@
 # lambda-forest
-*A set of tools to ease REST AWS Lambda functions*
+*A set of tools to ease REST AWS Lambda Functions*
 
 ## About Lambda Forest
 Lambda Forest is a microframework that provides a set of tools to make it easier to develop rest api's using the aws lambda function and api gateway. Lambda Forest attempts to make the develpment faster by easing common tasks, such as:
@@ -231,7 +231,7 @@ protected ResponseBodySerializerStrategy resolveSerializerStrategy(String accept
 ## Running locally
 The Lambda Forest framework provides a class that simulates a Lambda execution call.
 
-To simulate a Lambda execution call it is necessary to define a execution specification in your project resource folder.
+To simulate a Lambda execution call it is necessary to define an execution specification in your project resource folder.
 
 Eg.:
 
