@@ -18,7 +18,8 @@ A detailed documentation can be found [here](http://docs.aws.amazon.com/apigatew
 ## Getting Started
 
 The recommended way to use Lambda Forest is to consume it from Maven. To add the lastest version of Lambda Forest in your project declare the following dependency in your *pom.xml* file:
-```
+
+```xml
 <dependency>
     <groupId>br.com.tdsis</groupId>
     <artifactId>lambda-forest</artifactId>
