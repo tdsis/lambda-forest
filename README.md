@@ -15,12 +15,22 @@ In order to use Lambda Forest the AWS API Gateway needs to be configured to use 
 
 A detailed documentation can be found [here](http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-set-up-simple-proxy.html).
 
+## Getting Started
 
-## Handling Requests
+The recommended way to use Lambda Forest is to consume it from Maven. To add the lastest version of Lambda Forest in your project declare the following dependency in your *pom.xml* file:
+```
+<dependency>
+    <groupId>br.com.tdsis</groupId>
+    <artifactId>lambda-forest</artifactId>
+    <version>0.0.1</version>
+</dependency>
+```
+
+### Handling Requests
 
 The Lambda Forest framework provides an abstract base class called AbstratRequestHandler that handles a Lambda execution call and perform some operations such as request body deserialization, request validation, response body serialization and exception handling.
 
-### POST / PUT / PATCH
+#### POST / PUT / PATCH
 ```java
 public class PostHandler extends AbstractRequestHandler<UserRequest, UserResponse> {
 
@@ -41,7 +51,7 @@ public class PostHandler extends AbstractRequestHandler<UserRequest, UserRespons
 }
 ```
 
-### GET
+#### GET
 ```java
 public class GetHandler extends AbstractRequestHandler<Void, UserResponse> {
 
@@ -100,7 +110,7 @@ public class GetHandler extends AbstractRequestHandler<GetRequest, UserResponse>
 }
 ```
 
-### DELETE
+#### DELETE
 ```java
 public class DeleteHandler extends AbstractRequestHandler<Void, UserResponse> {
 
@@ -110,7 +120,7 @@ public class DeleteHandler extends AbstractRequestHandler<Void, UserResponse> {
     }
     
     @Override
-    public UserResponse execute(Void input, Context context) throws HttpException {   
+    public UserResponse execute(Void input, Context context) throws HttpException { 
         Optional<String> optional = getPathParameter("id");
         String id = optional.get();
         
@@ -122,7 +132,7 @@ public class DeleteHandler extends AbstractRequestHandler<Void, UserResponse> {
 }
 ```
 
-## The Request / Response Attributes
+### The Request / Response Attributes
 The AbstractRequestHandler class provides methods to access all the request / response attributes and the Lambda environment context as well:
 
  Attribute                           |                 Method
@@ -136,7 +146,7 @@ The AbstractRequestHandler class provides methods to access all the request / re
  Path Parameters          | getPathParameter("parameterName")
  Query String Parameters | getQueryStringParameter("parameterName")
  
-## Request Validation
+### Request Validation
 Lambda Forest uses the Hibernate bean validation implementation to validate requests.
 To validate the incoming request the input parameter of the *execute* method must be annotated with *@Valid*
 
@@ -204,7 +214,7 @@ protected RequestValidator resolveRequestValidator() {
 }
 ```
 
-## Serialization and Deserialization
+### Serialization and Deserialization
 Lambda Forest uses [Jackson](https://github.com/FasterXML/jackson) to serialize and deserialize the request and response body.
 
 The deserialization and serialization strategies are based on two http headers:
@@ -228,7 +238,7 @@ protected ResponseBodySerializerStrategy resolveSerializerStrategy(String accept
 }
 ```
 
-## Running locally
+### Running locally
 The Lambda Forest framework provides a class that simulates a Lambda execution call.
 
 To simulate a Lambda execution call it is necessary to define an execution specification in your project resource folder.
