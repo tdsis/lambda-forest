@@ -239,6 +239,60 @@ protected ResponseBodySerializerStrategy resolveSerializerStrategy(String accept
 }
 ```
 
+### API Gateway Custom Authorizer
+
+Lambda Forest offers a simple way to create a custom API Gateway Authorizer:
+
+#### Allowing a Request
+```java
+public class CustomAPIGatewayAuthorizer extends AbstractAPIGatewayAuthorizer {
+
+  @Override
+  public AuthPolicy authorize(AuthRequest request, Context context) throws HttpException {
+    // your custom authorization logic here
+    PolicyStatement policyStatement = new PolicyStatement(
+      AuthPolicy.ACTION_INVOKE, 
+      AuthPolicy.ALLOW, 
+      request.getMethodArn());
+
+    return new AuthPolicyBuilder()
+      .withPrincipalId("12345678")			
+      .addPolicyStatement(policyStatement)
+      .addToContext("myCustomKey", "myCustomValue")
+      .build();
+  }
+
+}
+```
+
+#### Denying access to all API Gateway Resources
+```java
+public class CustomAPIGatewayAuthorizer extends AbstractAPIGatewayAuthorizer {
+
+  @Override
+  public AuthPolicy authorize(AuthRequest request, Context context) throws HttpException {
+    // your custom authorization logic here
+    return new AuthPolicyBuilder("principal-id")
+	    .denyAll()
+	    .build();
+  }
+
+}
+```
+
+#### Denying access with a HTTP Exception
+```java
+public class CustomAPIGatewayAuthorizer extends AbstractAPIGatewayAuthorizer {
+  
+  @Override
+  public AuthPolicy authorize(AuthRequest request, Context context) throws HttpException {
+    // your custom authorization logic here
+    throw new UnauthorizedException();
+  }
+
+}
+```
+
 ### Running locally
 The Lambda Forest framework provides a class that simulates a Lambda execution call.
 
