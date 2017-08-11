@@ -249,17 +249,19 @@ public class CustomAPIGatewayAuthorizer extends AbstractAPIGatewayAuthorizer {
 
   @Override
   public AuthPolicy authorize(AuthRequest request, Context context) throws HttpException {
+    
     // your custom authorization logic here
     PolicyStatement policyStatement = new PolicyStatement(
-      AuthPolicy.ACTION_INVOKE, 
-      AuthPolicy.ALLOW, 
+      PolicyAction.INVOKE, 
+      PolicyEffect.ALLOW, 
       request.getMethodArn());
 
     return new AuthPolicyBuilder()
-      .withPrincipalId("12345678")			
+      .withPrincipalId("principal-id")			
       .addPolicyStatement(policyStatement)
       .addToContext("myCustomKey", "myCustomValue")
       .build();
+      
   }
 
 }
@@ -271,10 +273,12 @@ public class CustomAPIGatewayAuthorizer extends AbstractAPIGatewayAuthorizer {
 
   @Override
   public AuthPolicy authorize(AuthRequest request, Context context) throws HttpException {
+    
     // your custom authorization logic here
     return new AuthPolicyBuilder("principal-id")
 	    .denyAll()
 	    .build();
+	    
   }
 
 }
