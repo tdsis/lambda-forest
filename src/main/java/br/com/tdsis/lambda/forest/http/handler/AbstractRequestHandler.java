@@ -513,7 +513,7 @@ public abstract class AbstractRequestHandler<I, O> implements RequestHandler<Htt
      */
     private boolean shouldValidade() throws NoSuchMethodException, SecurityException {
         Method method = getClass().getMethod(EXECUTE_METHOD, 
-                Object.class, 
+                parameterizedInput, 
                 Context.class);
         
         Annotation[][] annotations = method.getParameterAnnotations();
