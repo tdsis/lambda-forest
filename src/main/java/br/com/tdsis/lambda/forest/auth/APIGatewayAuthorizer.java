@@ -16,14 +16,14 @@ import br.com.tdsis.lambda.forest.http.exception.HttpException;
  */
 public interface APIGatewayAuthorizer {
 
-    /**
-     * Performs a custom API Gateway Authorization.
-     * 
-     * @param request The request for authorize
-     * @param context The Lambda Context
-     * @return authPolicy The AuthPolicy (IAM Policy representation)
-     * @throws HttpException exception The http exception
-     */
-    AuthPolicy authorize(AuthRequest request, Context context) throws HttpException;
-    
+	/**
+	 * Performs a custom API Gateway Authorization.
+	 * 
+	 * @param request The request for authorize
+	 * @param context The Lambda Context
+	 * @return authPolicy The auth policy (IAM Policy representation)
+	 * @throws HttpException exception The http exception
+	 */
+	AuthPolicy authorize(AuthRequest request, Context context) throws HttpException;
+	
 }

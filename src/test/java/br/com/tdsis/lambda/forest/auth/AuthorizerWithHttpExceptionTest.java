@@ -10,9 +10,9 @@ import br.com.tdsis.lambda.forest.http.exception.UnauthorizedException;
 
 public class AuthorizerWithHttpExceptionTest extends AbstractAPIGatewayAuthorizer {
 
-    @Override
-    public AuthPolicy authorize(AuthRequest request, Context context) throws HttpException {		
-        throw new UnauthorizedException();
-    }
+	@Override
+	public AuthPolicy authorize(AuthRequest request, Context context) throws HttpException {		
+		throw new UnauthorizedException();
+	}
 
 }

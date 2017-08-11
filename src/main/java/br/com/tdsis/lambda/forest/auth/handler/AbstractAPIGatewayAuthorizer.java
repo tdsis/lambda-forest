@@ -10,6 +10,8 @@ import br.com.tdsis.lambda.forest.auth.APIGatewayAuthorizer;
 import br.com.tdsis.lambda.forest.auth.domain.AuthPolicy;
 import br.com.tdsis.lambda.forest.auth.domain.AuthPolicyBuilder;
 import br.com.tdsis.lambda.forest.auth.domain.AuthRequest;
+import br.com.tdsis.lambda.forest.auth.domain.PolicyAction;
+import br.com.tdsis.lambda.forest.auth.domain.PolicyEffect;
 import br.com.tdsis.lambda.forest.auth.domain.PolicyStatement;
 import br.com.tdsis.lambda.forest.http.exception.HttpException;
 
@@ -46,62 +48,62 @@ import br.com.tdsis.lambda.forest.http.exception.HttpException;
  *          AWS Custom Authorizer</a>
  */
 public abstract class AbstractAPIGatewayAuthorizer 
-    implements RequestHandler<AuthRequest, Map<String, String>>,
-               APIGatewayAuthorizer {
-    
-    private ObjectMapper mapper = new ObjectMapper();
-        
-    @Override
-    @SuppressWarnings("unchecked")
-    public Map<String, String> handleRequest(AuthRequest request, Context context) {
-        AuthPolicy policy = null;
-        
-        try {
-            
-            String methodArn = request.getMethodArn();
-            String [] arnPartials = methodArn.split(":");
-            
-            String region = arnPartials[3];
-            String awsAccountId = arnPartials[4];
-            
-            String [] apiGatewayArnPartials = arnPartials[5].split("/");
-            String restApiId = apiGatewayArnPartials[0];
-            String stage = apiGatewayArnPartials[1];
-            String httpMethod = apiGatewayArnPartials[2];
-            
-            String resource = "";			
-            for (int i = 3; i < apiGatewayArnPartials.length; i++) {
-                resource = resource.concat("/");
-                resource = resource.concat(apiGatewayArnPartials[i]);
-            }
-            
-            request.setRegion(region);
-            request.setAwsAccountId(awsAccountId);
-            request.setApiId(restApiId);
-            request.setStage(stage);
-            request.setHttpMethod(httpMethod);
-            request.setResource(resource);
-            
-            policy = authorize(request, context);
-        
-        } catch (HttpException e) {	
-            PolicyStatement statement = new PolicyStatement(
-                    AuthPolicy.ACTION_INVOKE, 
-                    AuthPolicy.DENY, 
-                    request.getMethodArn());
-                        
-            policy = new AuthPolicyBuilder("*")					
-                    .addPolicyStatement(statement)
-                    .build();
-            
-        } catch (Exception e) {			
-            policy = new AuthPolicyBuilder("*")
-                        .denyAll()
-                        .build();			
-        }
-        
-        Map<String, String> authPolicy = mapper.convertValue(policy, Map.class);
-        return authPolicy; 
-    }
-    
+	implements RequestHandler<AuthRequest, Map<String, String>>,
+			   APIGatewayAuthorizer {
+	
+	private ObjectMapper mapper = new ObjectMapper();
+		
+	@Override
+	@SuppressWarnings("unchecked")
+	public Map<String, String> handleRequest(AuthRequest request, Context context) {
+		AuthPolicy policy = null;
+		
+		try {
+			
+			String methodArn = request.getMethodArn();
+			String [] arnPartials = methodArn.split(":");
+			
+			String region = arnPartials[3];
+			String awsAccountId = arnPartials[4];
+			
+			String [] apiGatewayArnPartials = arnPartials[5].split("/");
+			String restApiId = apiGatewayArnPartials[0];
+			String stage = apiGatewayArnPartials[1];
+			String httpMethod = apiGatewayArnPartials[2];
+			
+			String resource = "";			
+			for (int i = 3; i < apiGatewayArnPartials.length; i++) {
+				resource = resource.concat("/");
+				resource = resource.concat(apiGatewayArnPartials[i]);
+			}
+			
+			request.setRegion(region);
+			request.setAwsAccountId(awsAccountId);
+			request.setApiId(restApiId);
+			request.setStage(stage);
+			request.setHttpMethod(httpMethod);
+			request.setResource(resource);
+			
+			policy = authorize(request, context);
+		
+		} catch (HttpException e) {	
+			PolicyStatement statement = new PolicyStatement(
+					PolicyAction.INVOKE, 
+					PolicyEffect.DENY, 
+					request.getMethodArn());
+						
+			policy = new AuthPolicyBuilder("*")					
+					.addPolicyStatement(statement)
+					.build();
+			
+		} catch (Exception e) {			
+			policy = new AuthPolicyBuilder("*")
+						.denyAll()
+						.build();			
+		}
+		
+		Map<String, String> authPolicy = mapper.convertValue(policy, Map.class);
+		return authPolicy; 
+	}
+	
 }
