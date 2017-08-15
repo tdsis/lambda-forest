@@ -384,7 +384,11 @@ public class LambdaHandler extends AbstractRequestHandler<UserRequest, UserRespo
     }
     
     public static void main(String [] args) {
-        LambdaRunner.run("lambda-spec.json", LambdaHandler.class, args);
+        LambdaRunner.run("lambda-spec.json", LambdaHandler.class, args)
+            .print()
+            .printBody()
+            .printHeaders()
+            .printStatusCode();
     }
 }
 ```
