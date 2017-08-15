@@ -1,7 +1,9 @@
 package br.com.tdsis.lambda.forest.util;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,7 +27,7 @@ import br.com.tdsis.lambda.forest.http.response.ResponseEntity;
 public class LambdaRunner {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
-    
+
     static {
         MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
     }
@@ -37,7 +39,7 @@ public class LambdaRunner {
      * @param runner The runner class
      * @param args   The args
      */
-    public static void run(String spec, 
+    public static RunnerResult run(String spec,
             Class<? extends AbstractRequestHandler<?, ?>> runner,
             String [] args) {
         
@@ -52,16 +54,69 @@ public class LambdaRunner {
                
             AbstractRequestHandler<?, ?> handler = runner.newInstance();
             ResponseEntity response = handler.handleRequest(request, lambdaSpec.getContext());
-            
-            System.out.println(MAPPER.writeValueAsString(response));
-            
+            return new RunnerResult(response);
         } catch (Exception e) {
             e.printStackTrace(System.out);
+            return new RunnerResult(null);
         }
     }
-    
-    
-    
+
+    public static class RunnerResult{
+        private ResponseEntity response;
+
+        public RunnerResult(ResponseEntity response) {
+            this.response = response;
+        }
+
+        public RunnerResult printHeader(){
+            print(() -> response.getHeaders());
+            return this;
+        }
+
+        public RunnerResult printBody(){
+                print(() -> {
+                    try {
+                        if(response.getBody() != null){
+                            return MAPPER.readValue(response.getBody(), Object.class);
+                        }else{
+                            return null;
+                        }
+                    } catch (IOException e) {
+                        return e;
+                    }
+                });
+            return this;
+        }
+
+        public RunnerResult printStatusCode(){
+            print(() -> response.getStatusCode());
+            return this;
+        }
+
+        public RunnerResult print(){
+            print(() -> response);
+            return this;
+        }
+
+        private void print(Supplier s){
+            if(response != null){
+                print(s.get());
+            }else{
+                print(null);
+            }
+        }
+
+        private void print(Object toPrint) {
+            try {
+                System.out.println(MAPPER
+                        .writerWithDefaultPrettyPrinter()
+                        .writeValueAsString(toPrint));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace(System.out);
+            }
+        }
+    }
+
     /**
      * Builds a http request with the given request specification
      * 
