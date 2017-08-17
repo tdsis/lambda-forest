@@ -73,6 +73,14 @@ public class LambdaRunner {
             return this;
         }
 
+        /**
+         *
+         * Prints the execution response body
+         *
+         * @return {@link RunnerResult}
+         *
+         *
+         */
         public RunnerResult printBody(){
                 print(() -> {
                     try {
@@ -88,11 +96,27 @@ public class LambdaRunner {
             return this;
         }
 
+        /**
+         *
+         * Prints the execution status code
+         *
+         * @return {@link RunnerResult}
+         *
+         *
+         */
         public RunnerResult printStatusCode(){
             print(() -> response.getStatusCode());
             return this;
         }
 
+        /**
+         *
+         * Prints the execution response entity (headers, status code and response body)
+         *
+         * @return {@link RunnerResult}
+         *
+         *
+         */
         public RunnerResult print(){
             print(() -> response);
             return this;
