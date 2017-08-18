@@ -6,7 +6,7 @@ import org.apache.http.HttpStatus;
  * The BadGatewayException class
  * <p>
  * This is a concrete class of the the HttpException class. 
- * It represents a method not allowed http response.
+ * It represents a bad gateway http response.
  * 
  * @author fsantana
  * @version 0.0.2

@@ -4,7 +4,7 @@ package br.com.tdsis.lambda.forest.http.exception;
  * The TooManyRequestsException class
  * <p>
  * This is a concrete class of the the HttpException class. 
- * It represents a method not allowed http response.
+ * It represents a too many requests http response.
  * 
  * @author fsantana
  * @version 0.0.2
