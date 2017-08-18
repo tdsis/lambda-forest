@@ -23,7 +23,7 @@ The recommended way to use Lambda Forest is to consume it from Maven. To add the
 <dependency>
     <groupId>br.com.tdsis</groupId>
     <artifactId>lambda-forest</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
