@@ -26,7 +26,7 @@ public class LambdaRequestSpec {
     private String path;
     private String method;
     private Map<String, String> headers;
-    private Map<String, Object> body;
+    private Object body;
     private Map<String, String> pathParameters;
     private Map<String, String> queryStringParameters;
     private Map<String, String> stageVariables;
@@ -111,7 +111,7 @@ public class LambdaRequestSpec {
      * 
      * @return body The request body
      */
-    public Map<String, Object> getBody() {
+    public Object getBody() {
         return body;
     }
 
@@ -120,7 +120,7 @@ public class LambdaRequestSpec {
      * 
      * @param body The request body
      */
-    public void setBody(Map<String, Object> body) {
+    public void setBody(Object body) {
         this.body = body;
     }
 
