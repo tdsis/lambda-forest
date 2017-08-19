@@ -7,6 +7,7 @@ import org.apache.http.entity.ContentType;
 
 import br.com.tdsis.lambda.forest.http.handler.AbstractRequestHandler;
 import br.com.tdsis.lambda.forest.json.JsonResponseBodySerializerStrategy;
+import br.com.tdsis.lambda.forest.xml.XmlResponseBodySerializerStrategy;
 
 /**
  * The SerializerStrategy enum
@@ -16,6 +17,7 @@ import br.com.tdsis.lambda.forest.json.JsonResponseBodySerializerStrategy;
  * The current supported serializers are:
  * <ul>
  * <li>{@code JsonResponseBodySerializerStrategy} for application/json</li>
+ * <li>{@code XmlResponseBodySerializerStrategy} for text/xml</li>
  * </ul>
  * <p>
  * If a specific serializer is not registered in this enum the 
@@ -30,9 +32,13 @@ public enum SerializerStrategy {
     /**
      * The response body serializer for application/json
      */
-    APPLICATION_JSON(ContentType.APPLICATION_JSON.getMimeType(), new JsonResponseBodySerializerStrategy());
-        
+    APPLICATION_JSON(ContentType.APPLICATION_JSON.getMimeType(), new JsonResponseBodySerializerStrategy()),
     
+    /**
+     * The response body serializer for text/xml
+     */
+    TEXT_XML(ContentType.TEXT_XML.getMimeType(), new XmlResponseBodySerializerStrategy());
+        
     private String contentType;
     private ResponseBodySerializerStrategy serializer;
     

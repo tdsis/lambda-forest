@@ -7,6 +7,7 @@ import org.apache.http.entity.ContentType;
 
 import br.com.tdsis.lambda.forest.http.handler.AbstractRequestHandler;
 import br.com.tdsis.lambda.forest.json.JsonRequestBodyDeserializerStrategy;
+import br.com.tdsis.lambda.forest.xml.XmlRequestBodyDeserializerStrategy;
 
 /**
  * The DeserializerStrategy enum
@@ -16,6 +17,7 @@ import br.com.tdsis.lambda.forest.json.JsonRequestBodyDeserializerStrategy;
  * The current supported content type deserializers are:
  * <ul>
  * <li>{@code JsonRequestBodyDeserializerStrategy} for application/json</li>
+ * <li>{@code XmlRequestBodyDeserializerStrategy} for text/xml</li>
  * </ul>
  * <p>
  * If a specific content type deserializer is not registered in this enum the 
@@ -28,9 +30,14 @@ import br.com.tdsis.lambda.forest.json.JsonRequestBodyDeserializerStrategy;
 public enum DeserializerStrategy {
 
     /**
-     * The Request body deserializer for content type application/json
+     * The request body deserializer for content type application/json
      */
-    APPLICATION_JSON(ContentType.APPLICATION_JSON.getMimeType(), new JsonRequestBodyDeserializerStrategy());
+    APPLICATION_JSON(ContentType.APPLICATION_JSON.getMimeType(), new JsonRequestBodyDeserializerStrategy()),
+    
+    /**
+     * The request body deserializer for contente type text/xml
+     */
+    TEXT_XML(ContentType.TEXT_XML.getMimeType(), new XmlRequestBodyDeserializerStrategy());
         
     private String contentType;
     private RequestBodyDeserializerStrategy deserializer;
