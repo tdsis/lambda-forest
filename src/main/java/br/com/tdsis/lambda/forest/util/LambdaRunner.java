@@ -2,10 +2,12 @@ package br.com.tdsis.lambda.forest.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -70,6 +72,32 @@ public class LambdaRunner {
 
         public RunnerResult printHeader(){
             print(() -> response.getHeaders());
+            return this;
+        }
+
+        /**
+         *
+         * Prints the execution response entity (headers, status code and response body). Pretty print body
+         *
+         * @return {@link RunnerResult}
+         *
+         *
+         */
+        public RunnerResult prettyPrint(){
+            try {
+                if(response == null){
+                   print(null);
+                   return this;
+                }
+                Map<Object, Object> resp = MAPPER.readValue(MAPPER.writeValueAsString(response), new TypeReference<Map<Object, Object>>() {});
+                if(response.getBody() != null){
+                    Object body = MAPPER.readValue(response.getBody(), Object.class);
+                    resp.put("body", body);
+                }
+                print(resp);
+            } catch (IOException e) {
+                e.printStackTrace(System.out);
+            }
             return this;
         }
 
