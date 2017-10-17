@@ -28,6 +28,7 @@
 		<hibernate.validator.annotation.processor>5.2.1.Final</hibernate.validator.annotation.processor>
 		<javax.el.api.version>2.2.4</javax.el.api.version>
 		<javax.el.version>2.2.4</javax.el.version>
+		<jackson.dataformat.xm.version>2.9.0</jackson.dataformat.xm.version>
 		<junit.version>4.12</junit.version>
 		<mockito.all.version>1.10.19</mockito.all.version>
 		<nexus.staging.maven.plugin.version>1.6.7</nexus.staging.maven.plugin.version>
@@ -115,6 +116,11 @@
 			<groupId>org.glassfish.web</groupId>
 			<artifactId>javax.el</artifactId>
 			<version>${javax.el.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>${jackson.dataformat.xm.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>

@@ -223,6 +223,16 @@ The deserialization and serialization strategies are based on two http headers:
  - **Content-Type** for deserialization
  - **Accept** for serialization
 
+The current deserializers support:
+
+ - **JSON** request body deserialization for **Content-Type: application/json**
+ - **XML** request body deserialization for **Content-Type: text/xml**
+ 
+ and the current serializers support:
+ 
+  - **JSON** response body serializer for **Accept: application/json**
+  - **XML** response body serializer for **Accept: text/xml**
+  
 If you want to provide your own request body deserializer, the method *resolveDeserializerStrategy* should be overridden:
 ```java
 @Override
@@ -314,54 +324,54 @@ project
 
 ```json
 {
-    "context": {
-        "awsRequestId": "",
-        "logGroupName": "",
-        "logStreamName": "",
-        "functionName": "",
-        "functionVersion": "",
-        "invokedFunctionArn": "",
-        "identity": null,
-        "clientContext": {
-            "client": {
-                "installationId": "",
-                "appTitle": "",
-                "appVersionName": "",
-                "appVersionCode": "",
-                "appPackageName": ""
-            },
-            "custom": {
-                
-            },
-            "environment": {
-                
-            }
+  "context": {
+    "awsRequestId": "",
+    "logGroupName": "",
+    "logStreamName": "",
+    "functionName": "",
+    "functionVersion": "",
+    "invokedFunctionArn": "",
+    "identity": null,
+    "clientContext": {
+        "client": {
+          "installationId": "",
+          "appTitle": "",
+          "appVersionName": "",
+          "appVersionCode": "",
+          "appPackageName": ""
         },
-        "remainingTimeInMillis": 30,
-        "memoryLimitInMB": 128,
-        "logger": null
+        "custom": {
+                
+        },
+        "environment": {
+                
+        }
+      },
+      "remainingTimeInMillis": 30,
+      "memoryLimitInMB": 128,
+      "logger": null
     },
     "request":{
-            "path": "/users",
-            "pathParameters": {
+      "path": "/users",
+      "pathParameters": {
                 
-            },
-            "queryStringParameters": {
+       },
+      "queryStringParameters": {
                 
-            },
-            "resource": "users",
-            "stageVariables": {
+      },
+      "resource": "users",
+      "stageVariables": {
             
-            },
-            "method":"POST",
-            "headers": {
+      },
+      "method":"POST",
+      "headers": {
                 
-            },
-            "body": {               
-                "name": "my name",
-                "message": "This is my message"
-            }
+      },
+      "body": {               
+        "name": "my name",
+        "message": "This is my message"
       }
+    }
 }
 ```
 
