@@ -183,8 +183,11 @@ public class LambdaRunner {
         
         String resource = requestSpec.getResource();
         String path = requestSpec.getPath();                
-        String method = requestSpec.getMethod();                
-        String json = MAPPER.writeValueAsString(requestSpec.getBody());
+        String method = requestSpec.getMethod();
+        
+        Object body = requestSpec.getBody();			
+        String json = body instanceof String ? body.toString() : MAPPER.writeValueAsString(body);
+        
         Map<String, String> headers = requestSpec.getHeaders();
         Map<String, String> pathParameters = requestSpec.getPathParameters();
         Map<String, String> queryStringParameters = requestSpec.getQueryStringParameters();
