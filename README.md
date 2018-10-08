@@ -316,10 +316,10 @@ Eg.:
 
 ```
 project
-└───src
-│   └───main
-│      └───resources
-│            lambda-spec.json
+????????????src
+???   ????????????main
+???      ????????????resources
+???            lambda-spec.json
 ```
 
 ```json
@@ -397,7 +397,7 @@ public class LambdaHandler extends AbstractRequestHandler<UserRequest, UserRespo
         LambdaRunner.run("lambda-spec.json", LambdaHandler.class, args)
             .print()
             .printBody()
-            .printHeaders()
+            .printHeader()
             .printStatusCode();
     }
 }
