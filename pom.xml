@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.com.tdsis</groupId>
@@ -63,7 +62,8 @@
 		<connection>scm:git:git://github.com/tdsis/lambda-forest.git</connection>
 		<developerConnection>scm:git:ssh://github.com:tdsis/lambda-forest.git</developerConnection>
 		<url>http://github.com/tdsis/lambda-forest/tree/master</url>
-	</scm>
+	  <tag>1.1.0</tag>
+  </scm>
 
 	<distributionManagement>
 		<snapshotRepository>
